@@ -65,6 +65,16 @@ void setup() {
 
   server.begin();
   Serial.println("HTTP server started");
+
+  leds[0] = COLORS[3];
+  leds[15] = COLORS[3];
+  
+  leds[135] = COLORS[3];
+  leds[119] = COLORS[3];
+  leds[120] = COLORS[3];
+  leds[136] = COLORS[3];
+  leds[255] = COLORS[3];
+  leds[240] = COLORS[3];
 }
 
 bool isCharInt(int character) {
@@ -115,7 +125,8 @@ void parseIncomingData() {
   }
 
   leds[ledIndex] = COLORS[colorIndex];
-  
+
+  FastLED.show();
 }
 
 void loop() {
@@ -134,11 +145,7 @@ void loop() {
 
       delay(10);
     }
-
-    FastLED.show();
-
     client.stop();
     Serial.println("Client disconnected");
-
     }
 }
