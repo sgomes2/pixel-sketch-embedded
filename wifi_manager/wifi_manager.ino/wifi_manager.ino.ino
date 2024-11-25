@@ -12,12 +12,45 @@ CRGB leds[NUM_LEDS];
 CRGB COLORS[16];
 int ledIndex = 0;
 
+void clearLedArray() {
+  for (int i = 0; i < NUM_LEDS; i++) {
+    leds[i] = COLORS[0] = CRGB::Black;
+  }
+}
+
+void setConfigScreen() {
+  clearLedArray();
+  int coloredSquares[] = {0, 15, 17, 30, 34, 45, 51, 60, 68, 75, 85, 90, 102, 105, 119, 120, 135, 136, 150, 153, 165, 170, 180, 187, 195, 204, 210, 221, 225, 238, 240, 255};
+
+  for (int i = 0; i < sizeof(coloredSquares)/sizeof(coloredSquares[0]); i++) {
+    leds[coloredSquares[i]] = COLORS[2];
+  }
+
+  FastLED.show();
+}
+
+void setReadyScreen() {
+  
+  clearLedArray();
+  leds[0] = COLORS[3];
+  leds[15] = COLORS[3];
+  leds[135] = COLORS[3];
+  leds[119] = COLORS[3];
+  leds[120] = COLORS[3];
+  leds[136] = COLORS[3];
+  leds[255] = COLORS[3];
+  leds[240] = COLORS[3];
+  FastLED.show();
+}
+
 void setup() {
   //Starting up serial
   Serial.begin(115200);
   FastLED.addLeds<WS2812B, DATA_PIN, GRB>(leds, NUM_LEDS);
   FastLED.setBrightness(10); //Number 0-255
   FastLED.clear();
+
+  setConfigScreen();
 
   Serial.println("Starting Sketch");
 
@@ -41,7 +74,7 @@ void setup() {
   //WiFiManager, Local intialization. Once its business is done, there is no need to keep it around
   WiFiManager wm;
 
-  wm.resetSettings();
+  // wm.resetSettings();
 
   bool res;
   // res = wm.autoConnect(); // auto generated AP name from chipid
@@ -69,16 +102,7 @@ void setup() {
     server.begin();
     Serial.println("HTTP server started");
 
-    leds[0] = COLORS[3];
-    leds[15] = COLORS[3];
-    leds[135] = COLORS[3];
-    leds[119] = COLORS[3];
-    leds[120] = COLORS[3];
-    leds[136] = COLORS[3];
-    leds[255] = COLORS[3];
-    leds[240] = COLORS[3];
-
-    FastLED.show();
+    setReadyScreen();
   }
 }
 
