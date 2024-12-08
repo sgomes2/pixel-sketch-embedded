@@ -11,7 +11,7 @@ WiFiClient client;
 #define DATA_PIN 21
 
 CRGB leds[NUM_LEDS];
-CRGB COLORS[16] = {
+CRGB COLORS[8] = {
   CRGB::White,
   CRGB::Black,
   CRGB::Red,
@@ -26,7 +26,7 @@ int ledIndex = 0;
 
 void clearLedArray() {
   for (int i = 0; i < NUM_LEDS; i++) {
-    leds[i] = COLORS[0] = CRGB::Black;
+    leds[i] = COLORS[1];
   }
 }
 
@@ -170,7 +170,6 @@ void parseIncomingData() {
   }
 
   leds[ledIndex] = COLORS[colorIndex];
-  FastLED.show();
 }
 
 void loop() {
@@ -187,7 +186,7 @@ void loop() {
         } 
       }
 
-      delay(10);
+      FastLED.show();
     }
     client.stop();
     // Serial.println("Client disconnected");
