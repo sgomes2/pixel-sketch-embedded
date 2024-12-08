@@ -183,7 +183,10 @@ void loop() {
         char received = client.read();
         if (received == '[') {
           parseIncomingData();
-        } 
+        } else if (received == ';') {
+          FastLED.show();
+          delay(500);
+        }
       }
 
       FastLED.show();
